@@ -39,7 +39,7 @@ export function getAll(type: ContentType): ContentItem[] {
     .filter((f) => f.endsWith('.mdx') || f.endsWith('.md'))
 
   const items = files.map((file) => {
-    const slug = file.replace(/\.(mdx|md)$/, '')
+    const slug = file.replace(/\.(mdx|md)$/, '').toLowerCase()
     const raw = fs.readFileSync(path.join(dir, file), 'utf8')
     const parsed = matter(raw)
     const data: any = parsed.data

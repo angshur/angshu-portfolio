@@ -17,7 +17,7 @@ export default function WritingPage() {
 
         <div className="mt-10 grid gap-6 md:grid-cols-2">
           {items.map((item) => (
-            <Link key={item.slug} href={`/writing/${item.slug}`} className="block">
+            <Link key={item.slug} href={`/writing/${item.slug.toLowerCase()}`} className="block">
               <Card>
                 <p className="text-lg font-semibold">{item.meta.title}</p>
                 {item.meta.description ? (
