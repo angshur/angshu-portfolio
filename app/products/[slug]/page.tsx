@@ -1,16 +1,13 @@
-import { notFound } from 'next/navigation'
-import { Container, Section, Badge, Button } from '@/components/ui'
-import { getAll, getBySlug } from '@/lib/content'
-import { Mdx } from '@/lib/mdx'
+export default async function ProductPage({
+  params,
+}: {
+  params: Promise<{ slug: string }>
+}) {
+  const { slug } = await params
 
-export async function generateStaticParams() {
-  return getAll('products').map((p) => ({ slug: p.slug }))
-}
-
-export default function ProductPage({ params }: { params: { slug: string } }) {
   let item
   try {
-    item = getBySlug('products', params.slug)
+    item = getBySlug('products', slug)
   } catch {
     notFound()
   }
@@ -72,3 +69,4 @@ export default function ProductPage({ params }: { params: { slug: string } }) {
     </Section>
   )
 }
+
