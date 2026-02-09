@@ -7,10 +7,16 @@ export async function generateStaticParams() {
   return getAll('writing').map((p) => ({ slug: p.slug }))
 }
 
-export default function WritingPost({ params }: { params: { slug: string } }) {
+export default async function WritingPost({
+  params,
+}: {
+  params: Promise<{ slug: string }>
+}) {
+  const { slug } = await params
+
   let item
   try {
-    item = getBySlug('writing', params.slug)
+    item = getBySlug('writing', slug)
   } catch {
     notFound()
   }
@@ -26,7 +32,7 @@ export default function WritingPost({ params }: { params: { slug: string } }) {
           ) : null}
 
           <div className="mt-6 flex flex-wrap gap-2">
-            {item.meta.date ? <Badge>{item.meta.date}</Badge> : null}
+            {item.meta.date ? <Badge>{String(item.meta.date)}</Badge> : null}
             {item.meta.tags?.map((t) => (
               <Badge key={t}>{t}</Badge>
             ))}
@@ -40,3 +46,4 @@ export default function WritingPost({ params }: { params: { slug: string } }) {
     </Section>
   )
 }
+
